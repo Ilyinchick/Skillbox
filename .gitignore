@@ -1,0 +1,11 @@
+.idea/
+.git/
+/cmake*/
+*.json
+*.cmake
+*.exe
+*.bin
+*.txt
+*.log
+*.ninja
+*.obj
