@@ -1,21 +1,21 @@
 #include <iostream>
 
 int main() {
-    int a[] = {10,1,-3,4,-1,2,1,-5,4};
-    int max = a[0], summ, left, right;
+    int a[] = {-5, 60, 10, -50, -500, 80, 10, -5, 4};
+    int summ, left, right, maxSumm = a[0];
 
     for (int i = 0; i < 9; i++) {
-        for (int j = 8; j >= 0; j--) {
-            summ = a[0];
-            for(int n = i; n <= j; n++){
-                summ += a[n];
-            }
-            if (max < summ) {
-                max = summ;
-                left = i;
+        summ = 0;
+
+        for (int j = i + 1; j < 9; j++) {
+            summ += a[j];
+            if (maxSumm < summ){
+                maxSumm = summ;
                 right = j;
+                left = i + 1;
             }
         }
+
     }
     std::cout << left << " - " << right;
 
