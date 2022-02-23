@@ -1,10 +1,14 @@
 #include <iostream>
 
 int main() {
-    int a[] = {-5, 300, 900, -50, -2000, 800, 800, -5, 4};
-    int summ = a[0], left = 0, right = 0, maxSumm = a[0], bestLeft, bestRight;
+    int a[] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+    int summ = a[0], left = 0, right = 0, maxSumm = a[0], bestLeft;
 
     for (int i = 1; i < 9; i++) {
+
+        if (summ > 0 && a[i] < 0 && std::abs(a[i]) > summ) {
+            summ = a[i];
+        }
 
         summ += a[i];
 
