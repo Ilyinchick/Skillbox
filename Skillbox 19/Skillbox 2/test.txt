@@ -1,0 +1,5 @@
+text in
+text file (suprised?)
+some more string to test
+and fill file.
+end of file
