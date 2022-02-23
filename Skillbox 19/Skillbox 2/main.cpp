@@ -54,7 +54,7 @@ std::vector<std::string> getDataFromFile(const std::string &path) {
     stream.open(path);
 
     while (!stream.eof()) {
-        stream >> buff;
+        std::getline(stream, buff);
         data.push_back(buff);
     }
     return data;
