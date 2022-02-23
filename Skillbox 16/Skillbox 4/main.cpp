@@ -20,6 +20,7 @@ Notes getNote(int i);
 std::string input();
 
 int main() {
+    std::cout << "Enter 12 digits: " << std::endl;
     for (char c : input()) {
         note = getNote(charToInt(c));
         printNote(note);
