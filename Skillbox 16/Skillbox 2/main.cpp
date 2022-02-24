@@ -1,24 +1,33 @@
 #include <iostream>
 #include <string>
 
-int enterNumber();
+double enterBeforeDot();
+
+double enterAfterDot();
 
 int main() {
-    float number;
-    char strNum[100];
+    double number;
 
     std::cout << "Enter before dot and after dot parts: " << std::endl;
-    int first = enterNumber(), second = enterNumber();
 
-    std::sprintf(strNum, "%i.%i", first, second);
-    number = std::strtof(strNum, nullptr);
+    number = enterBeforeDot();
+    number += enterAfterDot();
 
     std::cout << number;
     return 0;
 }
 
-int enterNumber() {
-    int number;
-    std::cin >> number;
-    return number;
+double enterBeforeDot() {
+    std::string in;
+    std::getline(std::cin, in);
+    double num = std::stod(in);
+    return num;
+}
+
+double enterAfterDot() {
+    std::string in = ".", dummy;
+    std::getline(std::cin, dummy);
+    in += dummy;
+    double num = std::stod(in);
+    return num;
 }
