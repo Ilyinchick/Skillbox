@@ -3,12 +3,12 @@
 
 enum Notes {
     DO = 1,
-    RE,
-    MI,
-    FA,
-    SOL,
-    LA,
-    SI
+    RE = 2,
+    MI = 4,
+    FA = 8,
+    SOL = 16,
+    LA = 32,
+    SI = 64
 } note;
 
 void printNote(Notes note);
@@ -20,7 +20,7 @@ Notes getNote(int i);
 std::string input();
 
 int main() {
-    std::cout << "Enter 12 digits: " << std::endl;
+    std::cout << "Enter 12 combinations: " << std::endl;
     for (char c : input()) {
         note = getNote(charToInt(c));
         printNote(note);
@@ -28,21 +28,20 @@ int main() {
     return 0;
 }
 
-
 void printNote(Notes note) {
      if (note == 1) {
         std::cout << "DO ";
     } else if (note == 2) {
          std::cout << "RE ";
-     } else if (note == 3) {
-         std::cout << "MI ";
      } else if (note == 4) {
+         std::cout << "MI ";
+     } else if (note == 8) {
          std::cout << "FA ";
-     } else if (note == 5) {
+     } else if (note == 16) {
          std::cout << "SOL ";
-     } else if (note == 6) {
+     } else if (note == 32) {
          std::cout << "LA ";
-     } else if (note == 7) {
+     } else if (note == 64) {
          std::cout << "SI ";
      }
 }
@@ -50,15 +49,17 @@ void printNote(Notes note) {
 Notes getNote(int i) {
     if (i == 1) return DO;
     if (i == 2) return RE;
-    if (i == 3) return MI;
-    if (i == 4) return FA;
-    if (i == 5) return SOL;
-    if (i == 6) return LA;
-    if (i == 7) return SI;
+    if (i == 4) return MI;
+    if (i == 8) return FA;
+    if (i == 16) return SOL;
+    if (i == 32) return LA;
+    if (i == 64) return SI;
 }
 
 int charToInt(char c) {
-    return c - 48;
+    int note = c - 48;
+    note = 1 << (note - 1);
+    return note;
 }
 
 std::string input() {
