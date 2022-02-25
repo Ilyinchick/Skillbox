@@ -10,6 +10,7 @@ int main() {
         std::cout << i << " ";
     }
     std::cout << std::endl;
+
     reverse(arr);
 
     for (int i : arr) {

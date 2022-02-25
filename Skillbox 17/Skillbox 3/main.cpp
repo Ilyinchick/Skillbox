@@ -4,7 +4,7 @@ bool substr(char* a, char* b);
 
 int main() {
     char* a = "String";
-    char* b = "in";
+    char* b = "ing";
     std::cout << substr(a, b) << std::endl;
     return 0;
 }
