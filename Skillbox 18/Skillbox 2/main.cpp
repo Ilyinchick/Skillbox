@@ -3,7 +3,7 @@
 int jump(int n);
 
 int main() {
-    std::cout << jump(3);
+    std::cout << jump(4);
     return 0;
 }
 

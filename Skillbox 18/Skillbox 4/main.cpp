@@ -4,7 +4,7 @@ void evendigits(long long number, int* ans);
 
 int main() {
     int ans = 0;
-    long long number = 9223372036854775806;
+    long long number = 9223372036854775800;
     evendigits(number, &ans);
     std::cout << ans;
     return 0;

@@ -12,7 +12,7 @@ int main() {
     int arr[4] = {2, 4, 6, 8};
     print(a, arr);
     swapvec(a, arr);
-    std::cout << "\n";
+    std::cout << "After swap: " << std::endl;
     print(a, arr);
     return 0;
 }
@@ -21,9 +21,11 @@ void print (std::vector<int>& a, int arr[]) {
     for (int i : a) {
         std::cout << i << " ";
     }
+    std::cout << std::endl;
     for (int i = 0; i < a.size(); i++) {
         std::cout << arr[i] << " ";
     }
+    std::cout << std::endl;
 }
 
 void swap (int* a, int* b) {
