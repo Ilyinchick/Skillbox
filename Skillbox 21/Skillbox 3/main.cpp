@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+#include <cmath>
 
 struct vec {
     float x, y;
