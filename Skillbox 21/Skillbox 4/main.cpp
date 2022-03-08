@@ -378,7 +378,6 @@ void savePlayer() {
 void loadPlayer() {
     std::string newPath = path + "player.txt";
     std::ifstream stream;
-    int i = 0;
     stream.open(newPath);
     stream >> player.name >> player.health >> player.armor >> player.damage >> player.pos.x >> player.pos.y;
     stream.close();
