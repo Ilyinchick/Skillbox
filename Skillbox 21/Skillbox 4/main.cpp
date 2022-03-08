@@ -1,8 +1,9 @@
 #include <iostream>
 #include <ctime>
+#include <fstream>
 
 struct position {
-    int x, y, min = 0, max = 40;
+    int x, y;
 };
 
 struct character {
@@ -11,7 +12,16 @@ struct character {
     int armor;
     int damage;
     position pos;
+
+    std::string type;
+
+    void printStats() {
+        std::cout << name << " stats: \n" << "Health: " << health << "\nArmor: " << armor << "\nDamage: " << damage
+                  << std::endl;
+    }
 };
+
+const std::string path = "C:\\Users\\ailyi\\CLionProjects\\Skillbox\\Skillbox 21\\Skillbox 4\\";
 
 char field[40][40];
 
@@ -41,23 +51,49 @@ void move();
 
 void enemiesMove();
 
-void enemyMove(character *enemy);
-
-bool isValidCoordinate(int x, int y);
+bool isValidCoordinate(position* pos);
 
 std::string enterCommandMove();
 
+void fight(character *player, character *enemy);
+
+void takeDamage(character *object, int damage);
+
+bool isAlive(character *object);
+
+void moveTo(character *object, int direction);
+
+character *findByPos(position pos);
+
+bool enemiesAlive();
+
+void loadGame();
+
+void loadField();
+
+void loadCharacters();
+
+void saveGame();
+
+void saveCharacters();
+
+void saveField();
+
 int main() {
     std::srand(std::time(nullptr));
+
     fillField();
     initialize();
     printField();
+    saveField();
 
-    while (true) {
+    while (isAlive(&player) && enemiesAlive()) {
         printField();
         move();
-        if (player.health == 0) break;
+        player.printStats();
     }
+
+    std::cout << "Game over." << std::endl;
 
     return 0;
 }
@@ -78,6 +114,7 @@ void initializeEnemy(int i) {
     newEnemy.damage = rand() % 16 + 15;
     initializeEnemyPos(&pos);
     newEnemy.pos = pos;
+    newEnemy.type = "Enemy";
     enemy[i] = newEnemy;
 }
 
@@ -93,6 +130,7 @@ void initializePlayer() {
     newPlayer.damage = enterInt();
     newPlayer.pos = enterPos();
     field[newPlayer.pos.x][newPlayer.pos.y] = 'P';
+    newPlayer.type = "Player";
     player = newPlayer;
 }
 
@@ -157,23 +195,10 @@ void printField() {
 void move() {
     field[player.pos.x][player.pos.y] = '.';
     std::string command = enterCommandMove();
-    if (command == "down") {
-        if (isValidCoordinate(player.pos.x + 1, player.pos.y)) {
-            player.pos.x += 1;
-        }
-    } else if (command == "up") {
-        if (isValidCoordinate(player.pos.x - 1, player.pos.y)) {
-            player.pos.x -= 1;
-        }
-    } else if (command == "right") {
-        if (isValidCoordinate(player.pos.x, player.pos.y + 1)) {
-            player.pos.y += 1;
-        }
-    } else if (command == "left") {
-        if (isValidCoordinate(player.pos.x, player.pos.y - 1)) {
-            player.pos.y -= 1;
-        }
-    }
+    if (command == "down") moveTo(&player, 3);
+    else if (command == "up") moveTo(&player, 1);
+    else if (command == "right") moveTo(&player, 2);
+    else if (command == "left") moveTo(&player, 0);
     field[player.pos.x][player.pos.y] = 'P';
     enemiesMove();
 }
@@ -192,44 +217,103 @@ std::string enterCommandMove() {
 
 void enemiesMove() {
     for (int i = 0; i < 5; i++) {
-        field[enemy[i].pos.x][enemy[i].pos.y] = '.';
-        enemyMove(&enemy[i]);
-        field[enemy[i].pos.x][enemy[i].pos.y] = 'E';
+        if (isAlive(&enemy[i])) {
+            field[enemy[i].pos.x][enemy[i].pos.y] = '.';
+            int direction = rand() % 4;
+            moveTo(&enemy[i], direction);
+            field[enemy[i].pos.x][enemy[i].pos.y] = 'E';
+        }
     }
 }
 
-void enemyMove(character *enemy) {
-    int direction = rand() % 4;
+bool isValidCoordinate(position* pos) {
+    if (pos->x < 0 || pos->x > 40 || pos->y < 0 || pos->y > 40) return false;
+    else return true;
+}
+
+void fight(character *fPlayer, character *fEnemy) {
+    takeDamage(fPlayer, fEnemy->damage);
+    takeDamage(fEnemy, fPlayer->damage);
+    if (!isAlive(fEnemy)) field[fEnemy->pos.x][fEnemy->pos.y] = '.';
+}
+
+void takeDamage(character *object, int damage) {
+    object->armor -= damage;
+    if (object->armor < 0) {
+        object->health += object->armor;
+        object->armor = 0;
+    }
+    if (object->health < 0) object->health = 0;
+}
+
+bool isAlive(character *object) {
+    if (object->health > 0) return true;
+    else return false;
+}
+
+void moveTo(character *object, int direction) {
+    position newPos = object->pos;
     switch (direction) {
         case 0: {
-            if (isValidCoordinate(enemy->pos.x - 1, enemy->pos.y)) {
-                enemy->pos.x -= 1;
-            }
+            newPos.y -= 1;
             break;
         }
         case 1: {
-            if (isValidCoordinate(enemy->pos.x, enemy->pos.y + 1)) {
-                enemy->pos.y += 1;
-            }
+            newPos.x -= 1;
             break;
         }
         case 2: {
-            if (isValidCoordinate(enemy->pos.x + 1, enemy->pos.y)) {
-                enemy->pos.x += 1;
-            }
+            newPos.y += 1;
             break;
         }
         case 3: {
-            if (isValidCoordinate(enemy->pos.x, enemy->pos.y - 1)) {
-                enemy->pos.y -= 1;
-            }
+            newPos.x += 1;
             break;
         }
     }
+    if (isValidCoordinate(&newPos)) {
+        if (field[newPos.x][newPos.y] == '.') object->pos = newPos;
+        else if (field[newPos.x][newPos.y] == 'E' && object->type == "Player" )  {
+            fight(&player, findByPos(newPos));
+        } else if (field[newPos.x][newPos.y] == 'P' && object->type == "Enemy") {
+            fight(object, &player);
+        }
+    }
+}
+
+character *findByPos(position pos) {
+    for (int i = 0; i < 5; i++) {
+        if (enemy[i].pos.x == pos.x && enemy[i].pos.y == pos.y) return &enemy[i];
+    }
+    std::cout << "No enemies in this position." << std::endl;
+}
+
+bool enemiesAlive() {
+    int hp = 0;
+    for (int i = 0; i < 5; i++) {
+        hp += enemy[i].health;
+    }
+    if (hp > 0) return true;
+    else return false;
+}
+
+void saveGame() {
 
 }
 
-bool isValidCoordinate(int x, int y) {
-    if (x < 0 || x > 40 || y < 0 || y > 40) return false;
-    else return true;
+void saveField() {
+    std::string fieldPath = path + "field.txt";
+    std::ofstream stream;
+    stream.open(fieldPath);
+    for (int i = 0; i < 40; i++) {
+        for (int j = 0; j < 40; j++) {
+            stream << field[i][j];
+        }
+        stream << std::endl;
+    }
+    stream.close();
+}
+
+void loadField() {
+    
 }
