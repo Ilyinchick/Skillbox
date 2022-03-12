@@ -1,7 +1,6 @@
 #include <iostream>
 #include <map>
 
-
 int main() {
     std::map<std::string, std::string> oMap;
     int counter = 0;
