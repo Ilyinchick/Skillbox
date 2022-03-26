@@ -1,16 +1,15 @@
 #include "ram.h"
 
+int ram[8];
+
 void write() {
-    std::cout << "Enter 8 values for ram: " << std::endl;
-    for(int i = 0; i < 8; i++) {
-        ram[i] = enterInt();
-    }
+    input(ram);
 }
 
 void read() {
-    std::cout << std::endl;
-    for (int i = 0; i < 8; i++) {
-        std::cout << ram[i] << " ";
-    }
-    std::cout << std::endl;
+    display(ram);
+}
+
+int* getRam() {
+    return ram;
 }

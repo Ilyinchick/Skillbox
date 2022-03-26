@@ -1,4 +1,4 @@
 #pragma once
 #include <iostream>
 
-void display(int arr[8]);
+void display(int* arr);
