@@ -31,7 +31,10 @@ void fillVectors(std::string path) {
 
     stream.open(path);
     if (stream.is_open()) {
-        while (!stream.eof()) {
+        do {
+            strDummy = "";
+            intDummy = 0;
+
             stream >> strDummy;
             names.push_back(strDummy);
 
@@ -43,7 +46,7 @@ void fillVectors(std::string path) {
 
             stream >> strDummy;
             dates.push_back(strDummy);
-        }
+        } while (!stream.eof());
     } else {
         std::cout << "File is not opened. Incorrect path." << std::endl;
     }
