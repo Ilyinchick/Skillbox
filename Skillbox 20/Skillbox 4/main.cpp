@@ -15,27 +15,39 @@ int calculateBankSumm();
 
 void fillBills();
 
+bool enterCommand();
+
 void calculateTransaction(int* summ, int nominal, int index);
 
 int main() {
     int summ, bankSumm;
+    std::string command;
+
     std::srand(std::time(nullptr));
 
-    fillBank();
-    fillBills();
-    bankSumm = calculateBankSumm();
-    std::cout << bankSumm;
-    summ = enterSumm();
+    do {
+        std::cout << "Enter your command (+\\-)" << std::endl;
+        std::cin >> command;
+        if (command != "+" && command != "-") std::cout << "Invalid command. Try again" << std::endl;
+    } while (command != "+" && command != "-");
 
-    if (summ < bankSumm && summ % 100 == 0) {
-        calculateTransaction(&summ, 5000, 5);
-        calculateTransaction(&summ, 2000, 4);
-        calculateTransaction(&summ, 1000, 3);
-        calculateTransaction(&summ, 500, 2);
-        calculateTransaction(&summ, 200, 1);
-        calculateTransaction(&summ, 100, 0);
+    if (command == "+") {
+        fillBank();
     } else {
-        std::cout << "Invalid summ to get." << std::endl;
+        fillBills();
+        bankSumm = calculateBankSumm();
+        summ = enterSumm();
+
+        if (summ < bankSumm && summ % 100 == 0) {
+            calculateTransaction(&summ, 5000, 5);
+            calculateTransaction(&summ, 2000, 4);
+            calculateTransaction(&summ, 1000, 3);
+            calculateTransaction(&summ, 500, 2);
+            calculateTransaction(&summ, 200, 1);
+            calculateTransaction(&summ, 100, 0);
+        } else {
+            std::cout << "Invalid summ to get." << std::endl;
+        }
     }
 
     return 0;

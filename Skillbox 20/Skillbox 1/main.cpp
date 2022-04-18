@@ -63,12 +63,14 @@ bool isValidString(std::string str) {
 bool isValidDate(std::string date) {
     std::string dummy;
 
+    if(date.length() < 10) return false;
+
     dummy = date.substr(0, 2);
     if (std::stoi(dummy) < 0 || std::stoi(dummy) > 31) return false;
     dummy = date.substr(3, 2);
     if (std::stoi(dummy) < 1 && std::stoi(dummy) > 12) return false;
     dummy = date.substr(6);
-    if (std::stoi(dummy) != 2022) return false;
+    if (std::stoi(dummy) > 2022) return false;
 
     return true;
 }
