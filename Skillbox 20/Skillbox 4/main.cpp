@@ -36,9 +36,12 @@ int main() {
     } else {
         fillBills();
         bankSumm = calculateBankSumm();
+  //       std::cout << bankSumm << std::endl;          // check banksumm to test
         summ = enterSumm();
 
-        if (summ < bankSumm && summ % 100 == 0) {
+
+
+        if (summ <= bankSumm && summ % 100 == 0) {
             calculateTransaction(&summ, 5000, 5);
             calculateTransaction(&summ, 2000, 4);
             calculateTransaction(&summ, 1000, 3);
@@ -58,30 +61,31 @@ void fillBank() {
     int dummy;
     for (int i = 0; i < 1000; i++) {
         dummy = rand() % 6 + 1;
+
         switch(dummy) {
             case 1 : {
                 dummy = 100;
-                stream << dummy << std::endl;
+                stream.write((char*)&dummy, sizeof(dummy));
                 break;
             } case 2 : {
                 dummy = 200;
-                stream << dummy << std::endl;
+                stream.write((char*)&dummy, sizeof(dummy));
                 break;
             } case 3 : {
                 dummy = 500;
-                stream << dummy << std::endl;
+                stream.write((char*)&dummy, sizeof(dummy));
                 break;
             } case 4 : {
                 dummy = 1000;
-                stream << dummy << std::endl;
+                stream.write((char*)&dummy, sizeof(dummy));
                 break;
             } case 5 : {
                 dummy = 2000;
-                stream << dummy << std::endl;
+                stream.write((char*)&dummy, sizeof(dummy));
                 break;
             } case 6 : {
                 dummy = 5000;
-                stream << dummy << std::endl;
+                stream.write((char*)&dummy, sizeof(dummy));
                 break;
             }
         }
@@ -102,7 +106,7 @@ int calculateBankSumm() {
 
     stream.open(path, std::ios::binary);
     while (!stream.eof()) {
-        stream >> dummy;
+        stream.read((char*)&dummy, sizeof(int));
         bankSumm += dummy;
     }
     stream.close();
@@ -114,7 +118,7 @@ void fillBills() {
     int dummy;
 
     while (!stream.eof()) {
-        stream >> dummy;
+        stream.read((char*)&dummy, sizeof(int));
         switch (dummy) {
             case 100 : {
                 bank[0]++;
