@@ -3,7 +3,7 @@
 
 bool isAnagram(std::string str1, std::string str2);
 
-bool containsChar(char a, std::map<char, char>* someMap);
+void buildMap(std::map<char, int>* someMap, std::string str);
 
 int main() {
     std::string str1, str2;
@@ -15,12 +15,27 @@ int main() {
 }
 
 bool isAnagram(std::string str1, std::string str2) {
-    std::map<char, char> oMap;
-    for (char c: str1) {
-        oMap.insert(std::make_pair(c, c));
-    }
-    for (char c: str2) {
-        if (oMap.count(oMap.find(c)->first) == 0) return false;
+    if (str1.length() != str2.length()) return false;
+    std::map<char, int> oMap, bMap;
+
+    buildMap(&oMap, str1);
+    buildMap(&bMap, str2);
+
+    std::map<char, int>::iterator it = oMap.begin();
+
+    while (it != oMap.end()) {
+        if (bMap.find(it->first)->second != it->second) return false;
+        it++;
     }
     return true;
+}
+
+void buildMap(std::map<char, int>* someMap, std::string str) {
+    for (char c: str) {
+        if (someMap -> count(someMap -> find(c) -> first) != 0) {
+            someMap -> find(c) -> second++;
+        } else {
+            someMap -> insert(std::make_pair(c, 1));
+        }
+    }
 }
