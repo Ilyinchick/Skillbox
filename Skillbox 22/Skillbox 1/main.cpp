@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <vector>
 
 
 bool ifContainsChar(std::string str, char a);
@@ -18,23 +19,38 @@ std::string reverseString(std::string str);
 
 std::string findBySurname(std::string str, std::map<std::string, std::string> someMap);
 
-void printNumbers(std::string str, std::map<std::string, std::string> someMap);
+void printNumbers(std::string str, std::map<std::string, std::vector<std::string>> surnameMap);
 
 int main() {
-    std::map <std::string, std::string> someMap;
-    std::string str;
+
+    std::map<std::string, std::string> phoneMap;
+    std::map<std::string, std::vector<std::string>> surnameMap;
+
+    std::string str, buff;
     while (true) {
         std::cout << "Enter command: " << std::endl;
         str = getStringFromInput();
         if (str == "exit") break;
+
         else if (isOneWord(str)) {
             if (isNumber(str)) {
-                std::cout << someMap.find(str)->second << std::endl;
+                if (phoneMap.count(str) > 0) {
+                    std::cout << phoneMap.find(str)->second << std::endl;
+                } else std::cout << "There is no such number" << std::endl;
             } else {
-                printNumbers(str, someMap);
+                if (surnameMap.count(str) > 0) {
+                    printNumbers(str, surnameMap);
+                } else std::cout << "There is no such person" << std::endl;
             }
         } else {
-            someMap.insert(std::make_pair(getFirstWord(str), getSecondWord(str)));
+            phoneMap.insert(std::make_pair(getFirstWord(str), getSecondWord(str)));
+            if (surnameMap.count(getSecondWord(str)) != 0) {
+                surnameMap.find(getSecondWord(str))->second.push_back(getFirstWord(str));
+            } else {
+                std::vector<std::string> vec;
+                vec.push_back(getFirstWord(str));
+                surnameMap.insert(std::make_pair(getSecondWord(str), vec));
+            }
         }
     }
 
@@ -90,10 +106,10 @@ std::string reverseString(std::string str) {
     return reversedStr;
 }
 
-void printNumbers(std::string str, std::map<std::string, std::string> someMap) {
-    std::map<std::string, std::string>::iterator it;
-    for (it = someMap.begin(); it != someMap.end(); it++) {
-        if (it->second == str)  std::cout << it->first << " ";
+void printNumbers(std::string str, std::map<std::string, std::vector<std::string>> surnameMap) {
+    std::vector<std::string> vec = surnameMap.find(str)->second;
+    for (std::string s: vec) {
+        std::cout << s << " ";
     }
     std::cout << std::endl;
 }
