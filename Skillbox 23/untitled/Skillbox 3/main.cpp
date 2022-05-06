@@ -3,7 +3,6 @@
 #define SPRING "Spring"
 
 int main() {
-    int x = 2;
 #if defined(WINTER)
     std::cout << WINTER;
 #elif defined(SUMMER)
