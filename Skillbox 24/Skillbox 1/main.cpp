@@ -45,6 +45,7 @@ int main() {
                 }
             } else if (input == "status") {
                 printTasks(&taskVector);
+                if (tsk) std::cout << taskName << std::endl;
             } else {
                 std::cout << "Invalid input." << std::endl;
             }

@@ -36,6 +36,8 @@ void addRecord(std::string name) {
     std::time_t t = std::time(nullptr);
     std::tm local = *std::localtime(&t);
     birthday bigDay;
+    std::string date;
+
     bigDay.name = name;
     std::cout << "Enter birthday:" << std::endl;
     std::cin >> std::get_time(&local, "%Y/%m/%d");
@@ -53,13 +55,44 @@ void printMathes(int mounth, int day) {
 void findClosestDate(int *mounth, int *day) {
     std::time_t t = std::time(nullptr);
     std::tm now = *std::localtime(&t);
-    *mounth = 12;
-    *day = 31;
+    *mounth = 13;
+    *day = 32;
+
     for (birthday b: birthList) {
-        if (b.birth.tm_mon >= now.tm_mon) {
-            if (b.birth.tm_mon - now.tm_mon <= *mounth) {
+
+        if (b.birth.tm_mon < now.tm_mon) {
+            if ( (12 - now.tm_mon + b.birth.tm_mon) < *mounth) {
                 *mounth = b.birth.tm_mon;
-                if (b.birth.tm_mday <= *day) *day = b.birth.tm_mday;
+                *day = b.birth.tm_mday;
+            } else if ((12 - now.tm_mon + b.birth.tm_mon) == *mounth) {
+                if (now.tm_mday <= b.birth.tm_mday) {
+                    *mounth = b.birth.tm_mon;
+                    *day = b.birth.tm_mday;
+                }
+            }
+
+        } else if (b.birth.tm_mon > now.tm_mon) {
+            if (b.birth.tm_mon - now.tm_mon < *mounth) {
+                *mounth = b.birth.tm_mon;
+                *day = b.birth.tm_mday;
+            } else if (b.birth.tm_mon - now.tm_mon == *mounth) {
+                if (now.tm_mday <= b.birth.tm_mday) {
+                    *mounth = b.birth.tm_mon;
+                    *day = b.birth.tm_mday;
+                }
+            }
+
+        } else {
+            if (now.tm_mday <= b.birth.tm_mday) {
+                if ((12 - now.tm_mon + b.birth.tm_mon) < *mounth) {
+                    *mounth = b.birth.tm_mon;
+                    *day = b.birth.tm_mday;
+                } else if ((12 - now.tm_mon + b.birth.tm_mon) == *mounth) {
+                    if (now.tm_mday <= b.birth.tm_mday) {
+                        *mounth = b.birth.tm_mon;
+                        *day = b.birth.tm_mday;
+                    }
+                }
             }
         }
     }
