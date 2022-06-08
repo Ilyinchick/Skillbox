@@ -1,6 +1,7 @@
 #include <ctime>
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 
 class Track {
@@ -46,15 +47,28 @@ public:
         isPaused = status;
     }
 
-    void setName(std::string newName) {
-        name = newName;
+    void setName() {
+        std::cout << "Enter track name: " << std::endl;
+        std::cin >> name;
     }
 
-    void setDate(std::tm newDate) {
-        date = newDate;
+    void setDate() {
+        std::time_t t = std::time(nullptr);
+        std::tm local = *std::localtime(&t);
+        std::cout << "Enter date of track (year/month/day):" << std::endl;
+        std::cin >> std::get_time(&local, "%Y/%m/%d");
+        date = local;
     }
 
-    void setDuration(int i) {
-        duration = i;
+    void setDuration() {
+        std::cout << "Enter duration of track: " << std::endl;
+        std::cin >> duration;
+    }
+
+    void initializeTrack() {
+        setName();
+        setDuration();
+        setDate();
+        isPaused = true;
     }
 };

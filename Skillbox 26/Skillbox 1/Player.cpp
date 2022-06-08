@@ -8,14 +8,13 @@ class Player {
 
 
 public:
-    void play(std::string name) {
-        for (Track t: trackList) {
-            if (t.getName() == name) {
-                activeTrack = t;
-                activeTrack.play();
-                break;
-            }
-        }
+
+    void play() {
+        Track *track = new Track();
+        track->initializeTrack();
+        trackList.push_back(*track);
+        activeTrack = *track;
+        activeTrack.play();
     }
 
     void pause() {
@@ -23,8 +22,8 @@ public:
     }
 
     void next() {
-        activeTrack.setStatus(true);
         nextTrack();
+        activeTrack.setStatus(true);
         activeTrack.play();
     }
 
@@ -32,16 +31,22 @@ public:
         if (!activeTrack.getStatus()) {
             nextTrack();
             activeTrack.setStatus(true);
-            std::cout << "Paused" << std::endl;
+            std::cout << "Stopped" << std::endl;
         }
     }
+
+
 
     void nextTrack() {
         int i = std::rand() % trackList.size();
         activeTrack = trackList[i];
     }
 
-    void addTrack(Track* track) {
-        trackList.push_back(*track);
+    Track getActiveTrack() {
+        return activeTrack;
+    }
+
+    int getTrackListSize() {
+        return trackList.size();
     }
 };
