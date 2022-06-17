@@ -1,4 +1,4 @@
-#include "Player.cpp"
+#include "Player.h"
 #include <iostream>
 
 std::string enterStr();
@@ -12,8 +12,7 @@ int main() {
         if (str == "exit") break;
         else if (str == "play") {
             if (player->getActiveTrack().getStatus() || player->getTrackListSize() < 1) player->play();
-        }
-        else if (str == "pause") player->pause();
+        } else if (str == "pause") player->pause();
         else if (str == "next") player->next();
         else player->stop();
     }
