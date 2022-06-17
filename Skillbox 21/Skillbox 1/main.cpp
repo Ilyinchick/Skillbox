@@ -83,7 +83,7 @@ bool isValidDate(std::string date) {
     dummy = date.substr(3, 2);
     if (std::stoi(dummy) < 1 && std::stoi(dummy) > 12) return false;
     dummy = date.substr(6);
-    if (std::stoi(dummy) != 2022) return false;
+    if (std::stoi(dummy) > 2022) return false;
 
     return true;
 }
@@ -108,7 +108,7 @@ void addPersonToList() {
     person man;
     std::string name, surname;
 
-    std::cout << "Enter date in 'Name Surname DD.MM.YYYY summ' format: " << std::endl;
+    std::cout << "Enter data in 'Name Surname DD.MM.YYYY summ' format: " << std::endl;
 
     name = enterString();
     surname = enterString();
