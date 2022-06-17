@@ -1,5 +1,5 @@
 #include "Contact.h"
-#include "InputControl.cpp"
+#include "InputControl.h"
 
 Contact Contact::createContact() {
     std::string nname, nnumber;
@@ -10,8 +10,16 @@ Contact Contact::createContact() {
         std::cin >> nnumber;
         if (!checkNumber(nnumber)) std::cout << "Invalid value. Try Again." << std::endl;
     } while (!checkNumber(nnumber));
-    Contact* contact = new Contact();
+    Contact *contact = new Contact();
     contact->name = nname;
     contact->number = nnumber;
     return *contact;
+}
+
+std::string Contact::getName() {
+    return name;
+}
+
+std::string Contact::getNumber() {
+    return number;
 }

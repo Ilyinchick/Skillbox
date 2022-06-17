@@ -1,4 +1,5 @@
-#include <string>
+#pragma once
+#include "InputControl.h"
 
 bool checkNumber(std::string number) {
     if (number.length() != 12 || (number[0] != '+' || number[1] != '7')) return false;

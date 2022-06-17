@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Contact.h"
 #include <vector>
 
@@ -13,6 +14,9 @@ public:
 
     void sms();
 
-    void print();
+    bool findByNumber(std::string number);
+
+    bool findByName(std::string name);
+
 };
 

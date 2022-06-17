@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <iostream>
 
@@ -10,6 +11,10 @@ class Contact {
 public:
 
     static Contact createContact();
+
+    std::string getName();
+
+    std::string getNumber();
 
 };
 
