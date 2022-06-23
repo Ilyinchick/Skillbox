@@ -24,7 +24,7 @@ int main() {
             std::cout << "There is no such habitat." << std::endl;
         }
     }
-    
+
     for (Branch* b: trees) {
         b = nullptr;
         delete b;
