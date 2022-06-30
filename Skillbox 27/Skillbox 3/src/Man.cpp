@@ -1,23 +1,23 @@
 #include "Man.h"
 
 void Man::setName(std::string inName) {
-    this->name = inName;
+    name = inName;
 }
 
 std::string Man::getName() {
-    return this->name;
+    return name;
 }
 
 void Man::setId(int inId) {
-    this->id = inId;
+    id = inId;
 }
 
 int Man::getId() {
-    return this->id;
+    return id;
 }
 
 void Man::print() {
-    std::cout << this->getId() << ". " << this->getName() << std::endl;
+    std::cout << getId() << ". " << getName() << std::endl;
 }
 
 void Man::increase() {
