@@ -13,7 +13,7 @@ class Branch {
 public:
     Branch() {
         this->parent = nullptr;
-        this->habitat = "";
+        this->habitat = "Tree";
         for (int i = 0; i < std::rand() % 3 + 3; i++) {
         children.push_back(new Branch(this));
         }
@@ -32,7 +32,7 @@ public:
 
     void fillTree();
 
-    int countOfNeighbors();
+    void countOfNeighbors(int* count);
 
     Branch* searchBranch(std::string name);
 
@@ -41,6 +41,8 @@ public:
     std::string getHabitat() {
         return this->habitat;
     }
+
+    Branch* searchBigBranch();
 
 
 };
