@@ -1,29 +1,29 @@
 #include "Figure.h"
 
 void Figure::setColor(std::string inColor) {
-    this->color = inColor;
+    color = inColor;
 }
 
 void Figure::setCoordinate(Coordinate *inCoordinate) {
-    this->coordinate = *inCoordinate;
+    coordinate = *inCoordinate;
 }
 
 std::string Figure::getColor() {
-    return this->color;
+    return color;
 }
 
 Coordinate *Figure::getCoordinate() {
-    return &this->coordinate;
+    return &coordinate;
 }
 
 void Figure::print() {
-    std::cout << "\n" << this->getName() << ": " << this->getCoordinate()->getStr() << " " << this->getColor() << "." << std::endl;
+    std::cout << "\n" << this->getName() << ": " << getCoordinate()->getStr() << " " << getColor() << "." << std::endl;
 }
 
 void Figure::setName(std::string inName) {
-    this->name = inName;
+    name = inName;
 }
 
 std::string Figure::getName() {
-    return this->name;
+    return name;
 }

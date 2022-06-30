@@ -1,11 +1,11 @@
 #include "Circle.h"
 
 void Circle::setRaduis(double inRadius) {
-    this->radius = inRadius;
+    radius = inRadius;
 }
 
 double Circle::getRadius() {
-    return this->radius;
+    return radius;
 }
 
 double Circle::getSquare() {

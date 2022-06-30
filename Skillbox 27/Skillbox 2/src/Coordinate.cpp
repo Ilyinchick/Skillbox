@@ -1,22 +1,22 @@
 #include "Coordinate.h"
 
 std::string Coordinate::getStr() {
-    std::string coordinate = "( " + std::to_string(this->getX()) + " : " + std::to_string(this->getY()) + " )";
+    std::string coordinate = "( " + std::to_string(getX()) + " : " + std::to_string(getY()) + " )";
     return coordinate;
 }
 
 void Coordinate::setX(int inX) {
-    this->x = inX;
+    x = inX;
 }
 
 void Coordinate::setY(int inY) {
-this->y = inY;
+    y = inY;
 }
 
 double Coordinate::getX() {
-    return this->x;
+    return x;
 }
 
 double Coordinate::getY() {
-    return this->y;
+    return y;
 }
