@@ -14,11 +14,6 @@ int main() {
     s->print();
     t->print();
 
-    c = nullptr;
-    r = nullptr;
-    s = nullptr;
-    t = nullptr;
-
     delete c;
     delete r;
     delete s;

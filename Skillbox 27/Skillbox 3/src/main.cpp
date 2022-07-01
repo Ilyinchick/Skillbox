@@ -35,7 +35,6 @@ int main() {
         }
     }
 
-    director = nullptr;
     delete director;
 
     return 0;
