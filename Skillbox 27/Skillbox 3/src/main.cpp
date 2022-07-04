@@ -33,6 +33,12 @@ int main() {
                 if (!w->getIsWorking()) flag = true;
             }
         }
+        for (Manager* m: director-> getManagers()) {
+            for (Worker* w: m->getTeam()) {
+                delete w;
+            }
+            delete m;
+        }
     }
 
     delete director;

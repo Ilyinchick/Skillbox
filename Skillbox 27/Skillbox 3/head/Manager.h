@@ -12,6 +12,10 @@ public:
         this->setName("Manager" + std::to_string(this->getId()));
     }
 
+    ~Manager() {
+        std::cout << "Manager destructor" << std::endl;
+    }
+
     void generateTeam(int count);
 
     void generateTasks(int seed);
