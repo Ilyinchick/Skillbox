@@ -1,12 +1,9 @@
 #pragma once
-
 #include "Talent.h"
 
-class Counting : protected Talent {
+class Counting : public Talent {
 
-protected:
-    void addTalent(std::vector<std::string>* vec);
-
-    Counting() {};
+public:
+    void doThing();
 
 };

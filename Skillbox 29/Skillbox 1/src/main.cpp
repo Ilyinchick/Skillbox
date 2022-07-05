@@ -1,12 +1,14 @@
 #include "Dog.h"
+#include "Counting.h"
+#include "Swimming.h"
+#include "Dancing.h"
 
 int main() {
     Dog d;
 
-    d.showTalents();
-
-    d.addCounting();
-    d.addSwimming();
+    d.addTalent(new Counting());
+    //d.addTalent(new Dancing());
+    d.addTalent(new Swimming());
 
     d.showTalents();
 

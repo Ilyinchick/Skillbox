@@ -1,11 +1,9 @@
 #pragma once
 #include "Talent.h"
 
-class Swimming: protected Talent {
+class Swimming: public Talent {
 
-protected:
-    void addTalent(std::vector<std::string>* vec);
-
-    Swimming() {};
+public:
+    void doThing();
 
 };

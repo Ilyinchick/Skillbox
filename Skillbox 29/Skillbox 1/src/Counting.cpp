@@ -1,6 +1,5 @@
 #include "Counting.h"
 
-void Counting::addTalent(std::vector<std::string>* vec) {
-    if (!InputControl::ifContains(*vec, "count")) vec->push_back("count");
+void Counting::doThing() {
+    std::cout << "It can count." << std::endl;
 }
-
