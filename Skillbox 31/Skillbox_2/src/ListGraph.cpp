@@ -46,3 +46,9 @@ bool ListGraph::containsVertex(int vertex) const {
 ListGraph::~ListGraph() {
     for (Vertex *v: graph) delete v;
 }
+
+std::vector<Vertex *> ListGraph::getGraph() const {
+    return graph;
+}
+
+

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "IGraph.h"
-#include <iostream>
 
 class MatrixGraph : public IGraph {
 private:
     std::vector<std::vector<int>> graph;
+
+    bool contains(const std::vector<int> &vec, const int &i);
 
 public:
     ~MatrixGraph() override;
@@ -32,4 +33,15 @@ public:
         }
     }
 
+    MatrixGraph(const IGraph &other) {
+        for (int i = 0; i < other.VerticesCount(); i++) {
+            std::vector<int> verticles, str;
+            other.GetNextVertices(i + 1, verticles);
+            for (int j = 0; j < other.VerticesCount(); j++) {
+                if (contains(verticles, j + 1)) str.push_back(1);
+                else str.push_back(0);
+            }
+            graph.push_back(str);
+        }
+    }
 };

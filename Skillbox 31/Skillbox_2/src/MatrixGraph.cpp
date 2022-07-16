@@ -52,3 +52,11 @@ bool MatrixGraph::containsVertex(int vertex) const {
 std::vector<std::vector<int>> MatrixGraph::getGraph() const {
     return graph;
 }
+
+bool MatrixGraph::contains(const std::vector<int> &vec, const int &i) {
+    for (int j: vec) {
+        if (j == i ) return true;
+    }
+    return false;
+}
+

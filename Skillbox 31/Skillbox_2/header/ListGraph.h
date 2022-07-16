@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Vertex.h"
 #include "IGraph.h"
-#include <iostream>
+#include "Vertex.h"
+
 
 class ListGraph : public IGraph {
     std::vector<Vertex*> graph;
@@ -20,14 +20,20 @@ public:
 
     bool containsVertex(int vertex) const override;
 
+    std::vector<Vertex*> getGraph() const;
+
     ListGraph(std::vector<Vertex*> _graph) {
         for (Vertex* v: _graph) {
             graph.push_back(v);
         }
     }
 
-    ListGraph(const IGraph &other) {
-
+    ListGraph(const IGraph &_graph) {
+        for (int i = 1; i <= _graph.VerticesCount(); i++) {
+            std::vector<int> verticles;
+            _graph.GetNextVertices(i, verticles);
+            graph.push_back(new Vertex(i, {verticles}));
+            verticles.clear();
+        }
     }
-
 };
