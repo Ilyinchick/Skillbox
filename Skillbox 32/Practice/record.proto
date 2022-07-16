@@ -1,0 +1,7 @@
+syntax = "proto2";
+
+message Some {
+  required string name = 1;
+  required string surname = 2;
+  optional int32 age = 3;
+}
