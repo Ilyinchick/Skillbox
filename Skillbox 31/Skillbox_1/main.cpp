@@ -12,6 +12,12 @@ public:
     std::string getName() {
         return name;
     }
+
+    Toy& operator=(const Toy& oth) {
+        if (this == &oth) return *this;
+        name = oth.name;
+        return *this;
+    }
 };
 
 class Count {
@@ -33,6 +39,13 @@ public:
     int get() {
         return count;
     }
+
+    Count &operator=(const Count &oth) {
+        if (this == &oth) return *this;
+        count = oth.count;
+        return *this;
+    }
+
 };
 
 class Shared_ptr_toy {
@@ -45,6 +58,11 @@ public:
 
     Shared_ptr_toy(std::string name) {
         ptr_toy = new Toy(name);
+        refs = new Count(1);
+    }
+
+    Shared_ptr_toy(Toy* toy) {
+        ptr_toy = toy;
         refs = new Count(1);
     }
 
@@ -63,14 +81,16 @@ public:
         return new Shared_ptr_toy(oth);
     }
 
-    void deletePtr() {
-        refs->dec();
-        if (refs->get() <= 0) delete ptr_toy;
-    }
+//    void deletePtr() {
+//        delete ptr_toy;
+//    }
 
     Shared_ptr_toy &operator=(const Shared_ptr_toy &oth) {
         if (this == &oth) return *this;
-        if (ptr_toy != nullptr) deletePtr();
+        if (ptr_toy != nullptr) {
+            refs->dec();
+            delete ptr_toy;
+        }
         oth.refs->inc();
         ptr_toy = oth.ptr_toy;
         refs = oth.refs;
@@ -80,9 +100,12 @@ public:
     ~Shared_ptr_toy() {
         refs->dec();
         if (refs->get() <= 0) {
+            std::cout << "Delete " << ptr_toy->getName() << std::endl;
+            ptr_toy = nullptr;
             delete ptr_toy;
-            delete refs;
         }
+        refs = nullptr;
+        delete refs;
     }
 };
 
@@ -106,8 +129,13 @@ public:
 
 
 int main() {
-    Shared_ptr_toy* ball = new Shared_ptr_toy("Ball");
-    Shared_ptr_toy* bone = new Shared_ptr_toy("Bone");
+
+    Toy* tBall = new Toy("Ball");
+    Toy* tBone = new Toy("Bone");
+
+
+    Shared_ptr_toy* ball = new Shared_ptr_toy(tBall);
+    Shared_ptr_toy* bone = new Shared_ptr_toy(tBone);
 
     Dog* d1 = new Dog("D1", 14, ball);
     Dog* d2 = new Dog("D2", 12, ball);
@@ -118,6 +146,7 @@ int main() {
 
     d3->setLovely(ball);
     d5->setLovely(ball);
+
 
     delete bone;
 
