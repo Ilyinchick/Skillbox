@@ -140,14 +140,16 @@ class Dog {
 private:
     std::string name;
     int age;
-    Shared_ptr_toy lovely_toy;
+    Shared_ptr_toy* lovely_toy;
 
 public:
 
-    Dog(std::string _name, int _age, Shared_ptr_toy *lovely) : name(_name), age(_age), lovely_toy(*lovely) {}
+    Dog(std::string _name, int _age, Shared_ptr_toy* lovely) : name(_name), age(_age) {
+        lovely_toy = lovely;
+    }
 
     void setLovely(Shared_ptr_toy *lovely) {
-        lovely_toy = *lovely;
+        lovely_toy = lovely;
     }
 
 };
