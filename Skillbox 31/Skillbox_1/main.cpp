@@ -25,7 +25,6 @@ public:
     }
 
 
-
     std::string getName() {
         return name;
     }
@@ -57,7 +56,6 @@ public:
     }
 
 
-
     void inc() {
         count += 1;
     }
@@ -87,23 +85,26 @@ private:
 public:
 
     Shared_ptr_toy(std::string name) {
+        DEBUG_MSG("New Shared_ptr for new Toy " << name);
         ptr_toy = new Toy(name);
         refs = new Count(1);
     }
 
     Shared_ptr_toy(Toy *toy) {
+        DEBUG_MSG("New Shared_ptr for Toy " << toy->getName())
         ptr_toy = toy;
         refs = new Count(1);
     }
 
     Shared_ptr_toy(const Shared_ptr_toy &oth) {
+        DEBUG_MSG("New copied Shared_ptr " << oth.ptr_toy->getName() << " " << std::to_string(oth.refs->get()))
         ptr_toy = oth.ptr_toy;
         oth.refs->inc();
         refs = oth.refs;
     }
 
     ~Shared_ptr_toy() {
-        DEBUG_MSG("Delete Shared_ptr " <<  ptr_toy->getName() << " - " << std::to_string(refs->get()));
+        DEBUG_MSG("Delete Shared_ptr " << ptr_toy->getName() << " - " << std::to_string(refs->get()));
         if (refs->get() <= 1) {
             delete ptr_toy;
             delete refs;
