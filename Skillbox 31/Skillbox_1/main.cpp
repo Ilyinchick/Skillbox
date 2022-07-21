@@ -21,7 +21,7 @@ public:
     };
 
     ~Toy() {
-        DEBUG_MSG("Deleted Toy " + name)
+        DEBUG_MSG("Delete Toy " + name)
     }
 
 
@@ -52,7 +52,7 @@ public:
     };
 
     ~Count() {
-        DEBUG_MSG("Deleted Count " + std::to_string(count));
+        DEBUG_MSG("Delete Count " + std::to_string(count));
     }
 
 
@@ -133,6 +133,15 @@ public:
         return *this;
     }
 
+    void incRefs() {
+        refs->inc();
+    }
+
+    void decRefs() {
+        if (refs->get() <= 1) delete this;
+        refs->dec();
+    }
+
 };
 
 
@@ -145,11 +154,18 @@ private:
 public:
 
     Dog(std::string _name, int _age, Shared_ptr_toy* lovely) : name(_name), age(_age) {
+        lovely->incRefs();
         lovely_toy = lovely;
     }
 
     void setLovely(Shared_ptr_toy *lovely) {
+        lovely_toy->decRefs();
+        lovely->incRefs();
         lovely_toy = lovely;
+    }
+
+    ~Dog() {
+        lovely_toy->decRefs();
     }
 
 };
