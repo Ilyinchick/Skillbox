@@ -12,7 +12,6 @@ void task1() {
     }
 }
 
-
 void task2() {
     auto filter = [](std::vector<int> &list) {
         std::unordered_set<int> set;
@@ -51,7 +50,6 @@ void task3() {
     for (auto it: recursiveGetFileNamesByExtension("D:\\Games", ".exe")) {
         std::cout << it << std::endl;
     }
-
 }
 
 
