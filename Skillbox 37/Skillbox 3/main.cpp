@@ -2,6 +2,9 @@
 #include <QPushButton>
 #include "./ui_control.h"
 #include "CommadHadler.h"
+#include <QLoggingCategory>
+
+Q_DECLARE_LOGGING_CATEGORY("Channel")
 
 
 int main(int argc, char *argv[]) {
