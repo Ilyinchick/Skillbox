@@ -1,16 +1,19 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Skillbox_2)
+project(Skillbox_38-2 VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 REQUIRED COMPONENTS WebEngineWidgets)
+find_package(Qt6 COMPONENTS Widgets WebEngineWidgets)
 
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp webtask.h webtask.cpp webtask.ui)
 
-target_link_libraries(target PRIVATE Qt5::Core Qt5::Widgets Qt5::WebEngineCore Qt5::WebEngineWidgets)
+target_link_libraries(Skillbox_38-2 PRIVATE Qt6::Widgets Qt6::WebEngineWidgets)
+
