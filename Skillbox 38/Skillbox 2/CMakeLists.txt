@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 COMPONENTS Widgets WebEngineWidgets)
 
-add_executable(${PROJECT_NAME} main.cpp webtask.h webtask.cpp webtask.ui)
+add_executable(${PROJECT_NAME} main.cpp)
 
 target_link_libraries(Skillbox_38-2 PRIVATE Qt6::Widgets Qt6::WebEngineWidgets)
 

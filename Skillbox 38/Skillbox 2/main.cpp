@@ -14,8 +14,8 @@ int main(int argc, char *argv[])
     QWebEngineView view;
     QPlainTextEdit text;
 
-    layout.addWidget(&text);
-    layout.addWidget(&view);
+    layout.addWidget(&text, 1);
+    layout.addWidget(&view, 1);
 
     view.setMinimumSize(100, 100);
     text.setMinimumSize(100, 100);
