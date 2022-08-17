@@ -2,5 +2,5 @@
 
 class ConverterJSON {
 public:
-    std::string print();
+    std::string getDoc(std::string path);
 };
