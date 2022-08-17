@@ -25,3 +25,18 @@ public:
     const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
 };
 
+class IncorrectVersionJsonException: public fs_exception {
+public:
+    const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
+};
+
+class NoRequestsFieldException: public fs_exception {
+public:
+    const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
+};
+
+class EmptyRequestsFieldException: public fs_exception {
+public:
+    const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
+};
+
