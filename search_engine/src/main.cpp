@@ -8,12 +8,18 @@ int main() {
     auto atw = new ConverterJSON();
 
     try {
-        std::cout << atw->getDoc(PATH) << std::endl;
+        atw->testJson(R"(C:\Users\ailyi\CLionProjects\Skillbox\search_engine\manage\config.json)");
     }
     catch (FileNotFoundException ex) {
         std::cout << ex.what() << std::endl;
     }
     catch (EmptyFileException ex) {
+        std::cout << ex.what() << std::endl;
+    }
+    catch (NoConfigFieldException ex) {
+        std::cout << ex.what() << std::endl;
+    }
+    catch (ConfigFieldIsEmptyException ex) {
         std::cout << ex.what() << std::endl;
     }
 

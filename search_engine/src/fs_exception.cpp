@@ -11,3 +11,11 @@ const char *FileNotFoundException::what() const noexcept {
 const char *EmptyFileException::what() const noexcept {
     return "File is empty!";
 }
+
+const char *NoConfigFieldException::what() const noexcept {
+    return "No \"config\" field!";
+}
+
+const char *ConfigFieldIsEmptyException::what() const noexcept {
+    return "\"Config\" field is empty!";
+}
