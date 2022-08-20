@@ -3,7 +3,3 @@ language, or "C with Classes". The language has expanded significantly over time
 addition to facilities for low-level memory manipulation. It is almost always implemented as a compiled language, and many vendors provide C++ compilers, including
 the Free Software Foundation, LLVM, Microsoft, Intel, Oracle, and IBM, so it is available on many platforms.[10]
 
-C++ was designed with an orientation toward systems programming and embedded, resource-constrained software and large systems, with performance, efficiency,
-and flexibility of use as its design highlights.[11] C++ has also been found useful in many other contexts, with key strengths being software infrastructure and
-resource-constrained applications,[11] including desktop applications, video games, servers (e.g. e-commerce, web search, or databases), and performance-critical
-applications (e.g. telephone switches or space probes).[12]
