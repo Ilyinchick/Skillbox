@@ -1,8 +1,7 @@
+#include <fstream>
+#include <iostream>
+#include "../include/fs_exception.h"
 #include "../include/ConverterJSON.h"
-#include "fstream"
-#include "iostream"
-#include "fs_exception.h"
-
 
 const std::string VERSION = "0.1";
 
