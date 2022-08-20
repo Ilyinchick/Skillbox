@@ -52,5 +52,4 @@ private:
 
     nlohmann::json getRequestsJson();
 
-
 };
