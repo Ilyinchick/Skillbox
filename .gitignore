@@ -13,3 +13,4 @@ Skillbox 37/Skillbox 2/build-Skillbox_2-Desktop_Qt_5_15_2_MinGW_64_bit-Debug/
 *.user
 Skillbox 37/Skillbox 2/Skillbox_2/qml.qrc
 search_engine/json-develop/
+search_engine/googleTest/lib/
