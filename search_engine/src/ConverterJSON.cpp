@@ -1,9 +1,5 @@
-#include <fstream>
-#include <iostream>
 #include "../include/fs_exception.h"
 #include "../include/ConverterJSON.h"
-
-const std::string VERSION = "0.1";
 
 // opens file and returns its data with string
 // throws FileNotFoundException and EmptyFileException if path is invalid or file is empty
@@ -16,7 +12,8 @@ std::string ConverterJSON::getDoc(const std::string &path) {
 
     while (file) {
         std::getline(file, buff);
-        answer.append(buff.append(" "));
+        answer.append(buff);
+        if (!file.eof()) answer.append("\n");
         buff.clear();
     }
 
