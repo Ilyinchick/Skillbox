@@ -2,11 +2,31 @@
 #include "../include/fs_exception.h"
 #include "../include/ConverterJSON.h"
 
-TEST(AbsoluteDateTestSuite, test1){ // 12/2/2020 -> 737761
-    EXPECT_EQ(2, 2);
+bool stringEqual(const std::string& str1, const std::string& str2) {
+    if (str1.length() != str2.length()) {
+        return false;
+    }
+    for (int i = 0; i < str1.length(); i++) {
+        if (str1[i] != str2[i]) return false;
+    }
+    return true;
 }
 
-TEST(AbsoluteDateTestSuite, test2) {
-    auto dummy = new ConverterJSON();
-    EXPECT_EQ(5, dummy->GetResponsesLimit());
+TEST(converterJSON, GetTextDocuments) {
+    auto converter = new ConverterJSON();
+    const std::string test = "C++\nwas";
+    auto list = converter->GetTextDocuments();
+    EXPECT_GT(list.size(), 0);
+    EXPECT_TRUE(stringEqual(list[2], test));
+}
+
+TEST(converterJSON, GetResponsesLimit) {
+    auto converter = new ConverterJSON();
+    EXPECT_EQ(converter->GetResponsesLimit(), 5);
+}
+
+TEST(converterJSON, GetRequests) {
+    auto converter = new ConverterJSON();
+    auto list = converter->GetRequests();
+    EXPECT_TRUE(stringEqual(list[0], "C++"));
 }

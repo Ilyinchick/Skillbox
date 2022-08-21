@@ -1,14 +1,19 @@
 #include <string>
 #include <vector>
+#include <fstream>
+#include <iostream>
 #include "nlohmann/json.hpp"
+
+
+const static std::string VERSION = "0.1";
+
+const static std::string CONFIG_PATH = R"(C:\Users\ailyi\CLionProjects\Skillbox\search_engine\manage\config.json)";
+const static std::string REQUESTS_PATH = R"(C:\Users\ailyi\CLionProjects\Skillbox\search_engine\manage\requests.json)";
+const static std::string ANSWERS_PATH = R"(C:\Users\ailyi\CLionProjects\Skillbox\search_engine\manage\answers.json)";
 
 class ConverterJSON {
 
 public:
-
-    const std::string CONFIG_PATH = R"(C:\Users\ailyi\CLionProjects\Skillbox\search_engine\manage\config.json)";
-    const std::string REQUESTS_PATH = R"(C:\Users\ailyi\CLionProjects\Skillbox\search_engine\manage\requests.json)";
-    const std::string ANSWERS_PATH = R"(C:\Users\ailyi\CLionProjects\Skillbox\search_engine\manage\answers.json)";
 
     ConverterJSON() = default;
 
