@@ -1,3 +1,5 @@
+#pragma once
+
 #include <exception>
 
 class fs_exception: public std::exception {
@@ -39,4 +41,3 @@ class EmptyRequestsFieldException: public fs_exception {
 public:
     const char *what() const _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW override;
 };
-
