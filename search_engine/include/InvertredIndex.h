@@ -23,7 +23,7 @@ public:
     * Обновить или заполнить базу документов, по которой будем совершать поиск
     * @param texts_input содержимое документов
     */
-    void UpdateDocumentBase();
+    void UpdateDocumentBase(std::vector<std::string> docs);
 
 
     /*
@@ -33,20 +33,17 @@ public:
      */
     std::vector<Entry> GetWordCount(const std::string &word);
 
+    std::map<std::string, std::vector<Entry>> getDictionary();
 
-    void printWords();
+    int countWordsInStr(const std::string& word, const std::string& str);
+
 
 private:
 
-    std::vector<std::string> docs; // список содержимого документов
     std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный
-    std::set<std::string> wordsBase;
+    std::vector<std::string> docs;
 
-    void updateDocs();
-
-    void updateWordsBase();
-
-    int countWordsInStr(const std::string& word, const std::string& str);
+    std::set<std::string> getWordsBase();
 
 
 };

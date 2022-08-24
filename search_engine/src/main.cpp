@@ -4,8 +4,13 @@
 
 
 int main() {
-    auto example = new InvertedIndex();
-    example->UpdateDocumentBase();
-    //example->printWords();
+    std::vector<std::vector<std::pair<int, float>>> vec;
+    auto inverted = new InvertedIndex();
+    auto converter = new ConverterJSON();
+    inverted->UpdateDocumentBase(converter->GetTextDocuments());
+    for (auto& word: inverted->getDictionary()) {
+        std::cout << word.first << " ";
+    }
+
     return 0;
 }

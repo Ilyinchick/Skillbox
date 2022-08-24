@@ -1,14 +1,9 @@
 #include "../include/InvertredIndex.h"
 #include "../include/ConverterJSON.h"
 
-void InvertedIndex::updateDocs() {
-    auto converter = new ConverterJSON();
-    docs = converter->GetTextDocuments();
-    delete converter;
-}
-
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word) {
     std::vector<Entry> vector;
+
     for (int i = 0; i < docs.size(); i++) {
         std::string data = docs[i];
         for (char &c: data) c = (char) tolower(c);
@@ -19,45 +14,41 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string &word) {
 }
 
 int InvertedIndex::countWordsInStr(const std::string &word, const std::string &str) {
-    if (str.find(word) != std::string::npos) {
+    if (str.find(word) != std::string::npos && ( str.find(word) == 0) || str[(str.find(word) - 1)] == ' ') {
         return 1 + countWordsInStr(word, str.substr(str.find(word) + word.length(), str.length()));
     } else return 0;
 }
 
-void InvertedIndex::UpdateDocumentBase() {
-    updateDocs();
-    updateWordsBase();
+void InvertedIndex::UpdateDocumentBase(std::vector<std::string> _docs) {
+    docs = _docs;
+    freq_dictionary.clear();
+
+    for (auto& word: getWordsBase()) {
+        freq_dictionary.insert(std::make_pair(word, GetWordCount(word)));
+    }
 
 }
 
-void InvertedIndex::updateWordsBase() {
-    wordsBase.clear();
+std::set<std::string> InvertedIndex::getWordsBase() {
+    std::set<std::string> wordsBase;
 
     for (auto &str: docs) {
         std::string word;
         for (auto &c: str) {
-            word.append(&c);
+            if ((c == ' ' || c == '\n') && word.length() != 0) {
+                wordsBase.insert(word);
+                word.clear();
+                continue;
+            }
+            word += (char)tolower(c);
         }
-        std::cout << word;
+        if (word.length() != 0) wordsBase.insert(word);
     }
-//        for (int i = 0; i < str.length(); i++) {
-//            if (str[i] != ' ' && str[i] != '\n') {
-//                word.append(&str[i]);
-//            } else {
-//                if (word.length() != 0) {
-//                    std::cout << "insert " << word << std::endl;
-//                    wordsBase.insert(word);
-//                    word.clear();
-//                }
-//            }
-//        }
+    return wordsBase;
 }
 
-
-void InvertedIndex::printWords() {
-    for (auto &word: wordsBase) {
-        std::cout << word << std::endl;
-    }
+std::map<std::string, std::vector<Entry>> InvertedIndex::getDictionary() {
+    return freq_dictionary;
 }
 
 
