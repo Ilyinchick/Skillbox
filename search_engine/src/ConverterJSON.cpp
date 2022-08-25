@@ -88,6 +88,13 @@ std::vector<std::string> ConverterJSON::GetRequests() {
 }
 
 void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> answers) {
+//    auto index = new InvertedIndex();
+//    index->UpdateDocumentBase();
+//
+//    for (auto& str: GetRequests()) {
+//        for (char& c: str) c = (char)tolower(c);
+//        getAbsoluteRelevance(str);
+//    }
 
 }
 
@@ -157,4 +164,13 @@ void ConverterJSON::createAnswers() {
     std::ofstream stream(ANSWERS_PATH);
     nlohmann::json doc = {"asd: {asd}"};
     stream << doc;
+}
+
+int ConverterJSON::getAbsoluteRelevance(const std::string &word) {
+//    auto index = new InvertedIndex();
+//    index->UpdateDocumentBase();
+//    for (auto& obj: index->getDictionary()) {
+//        if (obj.first == word) std::cout << "found " << word << std::endl;
+//    }
+    return 1;
 }

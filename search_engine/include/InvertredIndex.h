@@ -4,6 +4,12 @@
 #include <string>
 #include <map>
 #include <set>
+#include <thread>
+#include <mutex>
+#include <iostream>
+
+static std::mutex locker;
+static std::set<std::string> wordsBase;
 
 struct Entry {
     int doc_id, count;
@@ -38,12 +44,42 @@ public:
     int countWordsInStr(const std::string& word, const std::string& str);
 
 
+
 private:
 
     std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный
     std::vector<std::string> docs;
 
-    std::set<std::string> getWordsBase();
+
+    static std::set<std::string> getWordsBaseFromDoc(const std::vector<std::string>& data) {
+        std::vector<std::thread> threads;
+        for (auto& str: data) {
+            threads.push_back(std::thread(getWordsFromFile, std::ref(str)));
+        }
+        for (auto& thr: threads) {
+            thr.join();
+        }
+        return wordsBase;
+    }
+
+    static void getWordsFromFile(const std::string& str) {
+        std::string word;
+        for (auto &c: str) {
+            if ((c == ' ' || c == '\n') && word.length() != 0) {
+                locker.lock();
+                wordsBase.insert(word);
+                locker.unlock();
+                word.clear();
+                continue;
+            }
+            word += (char)tolower(c);
+        }
+        if (word.length() != 0) {
+            locker.lock();
+            wordsBase.insert(word);
+            locker.unlock();
+        }
+    }
 
 
 };

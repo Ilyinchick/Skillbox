@@ -20,35 +20,18 @@ int InvertedIndex::countWordsInStr(const std::string &word, const std::string &s
 }
 
 void InvertedIndex::UpdateDocumentBase(std::vector<std::string> _docs) {
-    docs = _docs;
+    docs = std::move(_docs);
     freq_dictionary.clear();
 
-    for (auto& word: getWordsBase()) {
+    for (auto& word: getWordsBaseFromDoc(docs)) {
         freq_dictionary.insert(std::make_pair(word, GetWordCount(word)));
     }
-
 }
 
-std::set<std::string> InvertedIndex::getWordsBase() {
-    std::set<std::string> wordsBase;
-
-    for (auto &str: docs) {
-        std::string word;
-        for (auto &c: str) {
-            if ((c == ' ' || c == '\n') && word.length() != 0) {
-                wordsBase.insert(word);
-                word.clear();
-                continue;
-            }
-            word += (char)tolower(c);
-        }
-        if (word.length() != 0) wordsBase.insert(word);
-    }
-    return wordsBase;
-}
 
 std::map<std::string, std::vector<Entry>> InvertedIndex::getDictionary() {
     return freq_dictionary;
 }
+
 
 
