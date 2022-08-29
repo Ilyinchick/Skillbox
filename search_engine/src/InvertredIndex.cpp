@@ -28,9 +28,12 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> _docs) {
     }
 }
 
-
 std::map<std::string, std::vector<Entry>> InvertedIndex::getDictionary() {
     return freq_dictionary;
+}
+
+std::vector<std::string> InvertedIndex::getDocs() {
+    return docs;
 }
 
 

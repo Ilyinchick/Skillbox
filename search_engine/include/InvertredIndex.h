@@ -43,11 +43,13 @@ public:
 
     int countWordsInStr(const std::string& word, const std::string& str);
 
+    std::vector<std::string> getDocs();
+
 
 
 private:
 
-    std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный
+    std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь
     std::vector<std::string> docs;
 
 
