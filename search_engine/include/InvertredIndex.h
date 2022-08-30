@@ -47,11 +47,24 @@ public:
     std::vector<std::string> getDocs();
 
 
-
-private:
-
-    std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь
-    std::vector<std::string> docs;
+    static void getWordsFromFile(const std::string& str) {
+        std::string word;
+        for (auto &c: str) {
+            if (c == ' ' || c == '\n') {
+                locker.lock();
+                wordsBase.insert(word);
+                locker.unlock();
+                word.clear();
+                continue;
+            }
+            if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122) || c == '-' || c == '+') word += (char)tolower(c);
+        }
+        if (word.length() != 0) {
+            locker.lock();
+            wordsBase.insert(word);
+            locker.unlock();
+        }
+    }
 
 
     static std::set<std::string> getWordsBaseFromDoc(const std::vector<std::string>& data) {
@@ -65,24 +78,12 @@ private:
         return wordsBase;
     }
 
-    static void getWordsFromFile(const std::string& str) {
-        std::string word;
-        for (auto &c: str) {
-            if ((c == ' ' || c == '\n') && word.length() != 0) {
-                locker.lock();
-                wordsBase.insert(word);
-                locker.unlock();
-                word.clear();
-                continue;
-            }
-            word += (char)tolower(c);
-        }
-        if (word.length() != 0) {
-            locker.lock();
-            wordsBase.insert(word);
-            locker.unlock();
-        }
-    }
+
+private:
+
+    std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь
+    std::vector<std::string> docs;
+
 
 
 };
