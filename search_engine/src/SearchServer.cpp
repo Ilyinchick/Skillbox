@@ -4,16 +4,11 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
     std::vector<std::vector<RelativeIndex>> answers;
 
-    for (auto &query: queries_input) {
-        std::vector<RelativeIndex> vec = getRelativeVectorForQuery(query);
-        // if this query's relative is not null
-        // if (!vec.empty())
-        answers.push_back(vec);
-    }
+    answers.reserve(queries_input.size());
+    for (auto &query: queries_input) answers.push_back(getRelativeVectorForQuery(query));
 
-    for (auto& vecs: answers) {
-        bubbleSortByRelevance(vecs);
-    }
+    for (auto &vecs: answers) bubbleSortByRelevance(vecs);
+
     return answers;
 }
 
@@ -39,55 +34,49 @@ std::vector<RelativeIndex> SearchServer::getRelativeVectorForQuery(const std::st
     for (int i = 0; i < _index.getDocs().size(); i++) {
         RelativeIndex idx = getIndexForQueryForDoc(query, i);
         // if rank is not null for this doc
-        if (idx.rank > 0)
-            indexes.push_back(idx);
+        if (idx.rank > 0) indexes.push_back(idx);
     }
     return indexes;
 }
 
 
 RelativeIndex SearchServer::getIndexForQueryForDoc(const std::string &query, const int &doc_id) {
-    RelativeIndex index;
-
     std::vector<std::string> words = getWordsFromString(query);
+    auto dictionary = _index.getDictionary();
 
     // init array with zeros
     float rank[words.size()];
-    for (auto &f: rank) f = 0;
-
+    for (auto &f: rank) f = 0.0;
 
     for (int i = 0; i < words.size(); i++) {
+        if (dictionary.count(words[i]) < 1) continue;
 
-        if (_index.getDictionary().count(words[i]) > 0) {    // if word is found
-            int totalCount = 0;
-            for (auto &entry: _index.getDictionary().find(words[i])->second) {
-                totalCount += entry.count;
-                if (entry.doc_id == doc_id) rank[i] += (float) entry.count;
+        for (const auto& pair: dictionary) {
+            if (pair.first == words[i]) {
+                int totalCount = 0;
+
+                for (auto data: pair.second) {
+                    totalCount += data.count;
+                    if (data.doc_id == doc_id) rank[i] = data.count;
+                }
+                assert(totalCount >= rank[i]);
+                totalCount == 0 ? rank[i] = 0: rank[i] /= totalCount;
             }
-
-            if (totalCount != 0) rank[i] /= (float) totalCount;
-
-        } else {    //  if no such word in dictionary
-            rank[i] = 0;
         }
     }
 
-    float queryRank = 0.f;
-    for (auto i: rank) {
-            queryRank += i;
-    }
-    index.doc_id = doc_id;
-    index.rank = queryRank;
+    float queryRank = 0.0;
+    for (auto i: rank) queryRank += i;
 
-    return index;
+    return RelativeIndex{doc_id, queryRank};
 }
 
-void SearchServer::bubbleSortByRelevance(std::vector<RelativeIndex>& vector) {
+void SearchServer::bubbleSortByRelevance(std::vector<RelativeIndex> &vector) {
     if (vector.size() < 2) return;
     for (int i = 0; i < vector.size() - 1; i++) {
         for (int j = 0; j < vector.size() - 1; j++) {
-            if (vector[j].rank < vector[j+1].rank) {
-                std::swap(vector[j], vector[j+1]);
+            if (vector[j].rank < vector[j + 1].rank) {
+                std::swap(vector[j], vector[j + 1]);
             }
         }
     }

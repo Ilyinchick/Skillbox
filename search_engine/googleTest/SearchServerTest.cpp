@@ -25,16 +25,6 @@ TEST(TestCaseSearchServer, TestSimple) {
     SearchServer srv(idx);
     std::vector<vector<RelativeIndex>> result = srv.search(request);
 
-    for (int i = 0; i < 10; i++)  {
-        result = srv.search(request);
-    }
-
-    for (int i = 0; i < result.size(); i++) {
-        if (!(result[0][i] == expected[0][i])) {
-//
-        }
-    }
-
     ASSERT_EQ(result, expected);
 }
 
@@ -76,23 +66,16 @@ TEST(TestCaseSearchServer, TestTop5) {
     InvertedIndex idx;
     idx.UpdateDocumentBase(docs);
     SearchServer srv(idx);
-    std::vector<vector<RelativeIndex>> result;
+    std::vector<vector<RelativeIndex>> result = srv.search(request);
 
-        for (int i = 0; i < 5; i++) {
-            result = srv.search(request);
-            for (auto& vec1: result) {
-                for (auto& vec2: vec1) {
-                    if (vec2.doc_id == 7) std::cout << vec2.rank << std::endl;
-                }
-            }
+    std::cout << "Result :" << std::endl;
+    for (int i = 0; i < result.size(); i++) {
+        std::cout << "{" << std::endl;
+        for (int j = 0; j < result[i].size(); j++) {
+            std::cout << result[i][j].doc_id << " - " << result[i][j].rank << std::endl;
         }
-//        for (int i = 0; i < result.size(); i++) {
-//        if (result[0][i] != expected[0][i]) {
-//            std::cout << "Result: " << result[0][i].doc_id << " - " << result[0][i].rank << std::endl;
-//            std::cout << "Expected: " << expected[0][i].doc_id << " - " << expected[0][i].rank << std::endl;
-//        }
-//    }
-
+        std::cout << "}" << std::endl;
+    }
 
     ASSERT_EQ(result, expected);
 }

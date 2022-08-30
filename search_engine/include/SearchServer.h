@@ -2,12 +2,13 @@
 
 #include "InvertredIndex.h"
 
+const float eps = 1.e-7;
 
 struct RelativeIndex{
     int doc_id;
     float rank;
     bool operator ==(const RelativeIndex& other) const {
-        return (doc_id == other.doc_id && (rank + rank == other.rank*2));
+        return (doc_id == other.doc_id && (std::abs(other.rank - rank) < eps));
     }
 
 };
