@@ -7,6 +7,7 @@
 #include <thread>
 #include <mutex>
 #include <iostream>
+#include <assert.h>
 
 static std::mutex locker;
 static std::set<std::string> wordsBase;
