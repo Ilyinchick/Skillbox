@@ -51,7 +51,7 @@ RelativeIndex SearchServer::getIndexForQueryForDoc(const std::string &query, con
     for (int i = 0; i < words.size(); i++) {
         if (dictionary.count(words[i]) < 1) continue;
 
-        for (const auto& pair: dictionary) {
+        for (const auto &pair: dictionary) {
             if (pair.first == words[i]) {
                 int totalCount = 0;
 
@@ -60,7 +60,7 @@ RelativeIndex SearchServer::getIndexForQueryForDoc(const std::string &query, con
                     if (data.doc_id == doc_id) rank[i] = data.count;
                 }
                 assert(totalCount >= rank[i]);
-                totalCount == 0 ? rank[i] = 0: rank[i] /= totalCount;
+                totalCount == 0 ? rank[i] = 0 : rank[i] /= totalCount;
             }
         }
     }
