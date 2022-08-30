@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include "nlohmann/json.hpp"
+#include "InvertredIndex.h"
+#include "SearchServer.h"
 
 
 const static std::string VERSION = "0.1";
@@ -42,9 +44,9 @@ public:
 /**
 * Положить в файл answers.json результаты поисковых запросов
 */
-    void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers);
+    void putAnswers(std::vector<std::vector<RelativeIndex>>& answers);
 
-    void createAnswers();
+    void testFilesForValid();
 
 private:
     static std::string getDoc(const std::string &path);
@@ -58,5 +60,4 @@ private:
     nlohmann::json getConfigJson();
 
     nlohmann::json getRequestsJson();
-
 };

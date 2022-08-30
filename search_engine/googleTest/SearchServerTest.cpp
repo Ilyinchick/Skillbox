@@ -68,14 +68,14 @@ TEST(TestCaseSearchServer, TestTop5) {
     SearchServer srv(idx);
     std::vector<vector<RelativeIndex>> result = srv.search(request);
 
-    std::cout << "Result :" << std::endl;
-    for (int i = 0; i < result.size(); i++) {
-        std::cout << "{" << std::endl;
-        for (int j = 0; j < result[i].size(); j++) {
-            std::cout << result[i][j].doc_id << " - " << result[i][j].rank << std::endl;
-        }
-        std::cout << "}" << std::endl;
-    }
+//    std::cout << "Result :" << std::endl;
+//    for (int i = 0; i < result.size(); i++) {
+//        std::cout << "{" << std::endl;
+//        for (int j = 0; j < result[i].size(); j++) {
+//            std::cout << result[i][j].doc_id << " - " << result[i][j].rank << std::endl;
+//        }
+//        std::cout << "}" << std::endl;
+//    }
 
     ASSERT_EQ(result, expected);
 }
