@@ -82,20 +82,42 @@ std::vector<std::string> ConverterJSON::GetRequests() {
     std::vector<std::string> requests;
     nlohmann::json doc = getRequestsJson();
     for (std::string s: doc.find("requests").value()) {
+        for (auto &c: s) c = (char) tolower(c);
         requests.push_back(s);
     }
     return requests;
 }
 
-void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> answers) {
-//    auto index = new InvertedIndex();
-//    index->UpdateDocumentBase();
-//
-//    for (auto& str: GetRequests()) {
-//        for (char& c: str) c = (char)tolower(c);
-//        getAbsoluteRelevance(str);
-//    }
+void ConverterJSON::putAnswers(std::vector<std::vector<RelativeIndex>> &answers) {
+    std::ofstream file(ANSWERS_PATH);
+    nlohmann::json doc;
 
+    doc["answers"];
+    for (int i = 0; i < answers.size(); i++) {
+        std::string request = "request" + std::to_string(i);
+        auto relevanceVector = answers[i];
+        doc.find("answers").value()[request];
+
+        if (relevanceVector.size() > 1) {
+            doc.find("answers").value().find(request).value()["result"] = "true";
+            doc.find("answers").value().find(request).value()["relevance"];
+            for (auto data: relevanceVector) {
+                doc.find("answers").value().find(request).value().find("relevance").value()["docid: "
+                                                                                            + std::to_string(
+                        data.doc_id)] = "rank: " + std::to_string(data.rank);
+            }
+        } else if (relevanceVector.size() == 1) {
+            doc.find("answers").value().find(request).value()["result"] = "true";
+            doc.find("answers").value().find(request).value().find("relevance").value()["docid: "
+                                                                                        + std::to_string(
+                    relevanceVector[0].doc_id)] = "rank: " + std::to_string(relevanceVector[0].rank);
+        } else {
+            doc.find("answers").value().find(request).value()["result"] = "false";
+        }
+    }
+
+    file << doc;
+    file.close();
 }
 
 // throws FileNotFoundException and EmptyFileException if path or dile is invalid, otherwise return json
@@ -144,33 +166,24 @@ nlohmann::json ConverterJSON::getRequestsJson() {
     try {
         doc = getJson(REQUESTS_PATH);
     }
-    catch (FileNotFoundException& ex) {
+    catch (FileNotFoundException &ex) {
         std::cout << ex.what() << std::endl;
     }
-    catch (EmptyFileException& ex) {
+    catch (EmptyFileException &ex) {
         std::cout << ex.what() << std::endl;
     }
-    catch (NoRequestsFieldException& ex) {
+    catch (NoRequestsFieldException &ex) {
         std::cout << ex.what() << std::endl;
     }
-    catch (EmptyRequestsFieldException& ex) {
+    catch (EmptyRequestsFieldException &ex) {
         std::cout << ex.what() << std::endl;
     }
 
     return doc;
 }
 
-void ConverterJSON::createAnswers() {
-    std::ofstream stream(ANSWERS_PATH);
-    nlohmann::json doc = {"asd: {asd}"};
-    stream << doc;
+void ConverterJSON::testFilesForValid() {
+    testRequestsJson(REQUESTS_PATH);
+    testConfigJson(CONFIG_PATH);
 }
 
-int ConverterJSON::getAbsoluteRelevance(const std::string &word) {
-//    auto index = new InvertedIndex();
-//    index->UpdateDocumentBase();
-//    for (auto& obj: index->getDictionary()) {
-//        if (obj.first == word) std::cout << "found " << word << std::endl;
-//    }
-    return 1;
-}
