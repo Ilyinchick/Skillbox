@@ -1,12 +1,10 @@
 #include "../include/SearchServer.h"
 
 std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<std::string> &queries_input) {
-
     std::vector<std::vector<RelativeIndex>> answers;
 
     answers.reserve(queries_input.size());
     for (auto &query: queries_input) answers.push_back(getRelativeVectorForQuery(query));
-
     for (auto &vecs: answers) bubbleSortByRelevance(vecs);
 
     return answers;

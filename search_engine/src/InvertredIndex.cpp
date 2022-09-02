@@ -26,10 +26,6 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> _docs) {
     for (auto& word: getWordsBaseFromDoc(docs)) {
         auto entryVectors = GetWordCount(word);
         auto pair = std::make_pair(word, entryVectors);
-//        std::cout << "inserting \"" << word << "\" with: " << std::endl;
-//        for (auto data: entryVectors) {
-//            std::cout << data.doc_id << " - " << data.count << std::endl;
-//        }
         freq_dictionary.insert(pair);
     }
 
