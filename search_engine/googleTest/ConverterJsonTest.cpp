@@ -28,5 +28,5 @@ TEST(converterJSON, GetResponsesLimit) {
 TEST(converterJSON, GetRequests) {
     auto converter = new ConverterJSON();
     auto list = converter->GetRequests();
-    EXPECT_TRUE(stringEqual(list[0], "c++"));
+    EXPECT_TRUE(stringEqual(list[2], "test1"));
 }
