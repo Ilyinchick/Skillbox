@@ -22,7 +22,6 @@ std::string ConverterJSON::getDoc(const std::string &path) {
     return answer;
 }
 
-//test
 void ConverterJSON::testConfigJson(const std::string &path) {
     std::ifstream file(path);
     if (!file.is_open()) throw FileNotFoundException();
@@ -36,7 +35,6 @@ void ConverterJSON::testConfigJson(const std::string &path) {
 
 }
 
-//test
 void ConverterJSON::testRequestsJson(const std::string &path) {
     nlohmann::json dict;
     try {
@@ -72,7 +70,7 @@ std::vector<std::string> ConverterJSON::GetTextDocuments() {
     return list;
 }
 
-//returns int value of "max_responses" fild in config.json
+//returns int value of "max_responses" field in config.json
 int ConverterJSON::GetResponsesLimit() {
     return getConfigJson().find("config")->find("max_responses").value();
 }
@@ -99,18 +97,21 @@ void ConverterJSON::putAnswers(std::vector<std::vector<RelativeIndex>> &answers)
         doc.find("answers").value()[request];
 
         if (relevanceVector.size() > 1) {
-            doc.find("answers").value().find(request).value()["result"] = "true";
+            int limit = 0;
             doc.find("answers").value().find(request).value()["relevance"];
             for (auto data: relevanceVector) {
+                limit++;
+                if (limit > GetResponsesLimit()) break;
                 doc.find("answers").value().find(request).value().find("relevance").value()["docid: "
                                                                                             + std::to_string(
                         data.doc_id)] = "rank: " + std::to_string(data.rank);
             }
-        } else if (relevanceVector.size() == 1) {
             doc.find("answers").value().find(request).value()["result"] = "true";
-            doc.find("answers").value().find(request).value().find("relevance").value()["docid: "
+        } else if (relevanceVector.size() == 1) {
+            doc.find("answers").value().find(request).value()["docid: "
                                                                                         + std::to_string(
-                    relevanceVector[0].doc_id)] = "rank: " + std::to_string(relevanceVector[0].rank);
+                    relevanceVector.back().doc_id)] = "rank: " + std::to_string(relevanceVector.back().rank);
+            doc.find("answers").value().find(request).value()["result"] = "true";
         } else {
             doc.find("answers").value().find(request).value()["result"] = "false";
         }
