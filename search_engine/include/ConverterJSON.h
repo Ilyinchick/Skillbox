@@ -46,15 +46,24 @@ public:
 */
     void putAnswers(std::vector<std::vector<RelativeIndex>>& answers);
 
+    //throws Expetion if 'config' or 'request' files are not valid
     void testFilesForValid();
 
 private:
+    /*
+     * @return std::string as text of document
+     * @param path - global path to txt resource file
+     */
     static std::string getDoc(const std::string &path);
 
     static void testConfigJson(const std::string &path);
 
     static void testRequestsJson(const std::string &path);
 
+    /*
+     * @return json object
+     * @param path - global path to json resource file
+     */
     static nlohmann::json getJson(const std::string& path);
 
     nlohmann::json getConfigJson();

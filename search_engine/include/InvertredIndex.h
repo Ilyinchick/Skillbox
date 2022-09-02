@@ -40,13 +40,22 @@ public:
      */
     std::vector<Entry> GetWordCount(const std::string &word);
 
+    /*
+     * simple getter
+     * @return private 'freq_dictionary' field
+     */
     std::map<std::string, std::vector<Entry>> getDictionary();
-
-    int countWordsInStr(const std::string& word, const std::string& str);
-
+    /*
+     * simple getter
+     * @returns private 'docs' field
+     */
     std::vector<std::string> getDocs();
 
 
+    /*
+     * @param str - text of document
+     * split words from file and insert them into std::set wordBase to eliminate duplicates
+     */
     static void getWordsFromFile(const std::string& str) {
         std::string word;
         for (auto &c: str) {
@@ -66,7 +75,10 @@ public:
         }
     }
 
-
+    /*
+     * @param data - vector of std::string that contains data from all documents
+     * calls getWordsFromFile() in separate threads for each document in vector
+     */
     static std::set<std::string> getWordsBaseFromDoc(const std::vector<std::string>& data) {
         std::vector<std::thread> threads;
         for (auto& str: data) {
@@ -81,9 +93,9 @@ public:
 
 private:
 
+    int countWordsInStr(const std::string& word, const std::string& str);
+
     std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь
     std::vector<std::string> docs;
-
-
 
 };
